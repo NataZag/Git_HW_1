@@ -1,100 +1,252 @@
- --1. Вывести все поля и все строки.
-select * from students;
+ --1. Р’С‹РІРµСЃС‚Рё РІСЃРµС… СЂР°Р±РѕС‚РЅРёРєРѕРІ С‡СЊРё Р·Р°СЂРїР»Р°С‚С‹ РµСЃС‚СЊ РІ Р±Р°Р·Рµ, РІРјРµСЃС‚Рµ СЃ Р·Р°СЂРїР»Р°С‚Р°РјРё.
+select e.employee_name, es.salary_id, s.monthly_salary 
+FROM employees e 
+join employee_salary es on es.employee_id = e.id
+join salary s on es.salary_id = s.id 
+
+ --2. Р’С‹РІРµСЃС‚Рё РІСЃРµС… СЂР°Р±РѕС‚РЅРёРєРѕРІ Сѓ РєРѕС‚РѕСЂС‹С… Р—Рџ РјРµРЅСЊС€Рµ 2000.
+select e.employee_name, s.monthly_salary 
+FROM employees e
+join employee_salary es on es.employee_id = e.id
+join salary s on es.salary_id = s.id 
+where monthly_salary < 2000
+
+ --3. Р’С‹РІРµСЃС‚Рё РІСЃРµ Р·Р°СЂРїР»Р°С‚РЅС‹Рµ РїРѕР·РёС†РёРё, РЅРѕ СЂР°Р±РѕС‚РЅРёРє РїРѕ РЅРёРј РЅРµ РЅР°Р·РЅР°С‡РµРЅ. (Р—Рџ РµСЃС‚СЊ, РЅРѕ РЅРµ РїРѕРЅСЏС‚РЅРѕ РєС‚Рѕ РµС‘ РїРѕР»СѓС‡Р°РµС‚.)
+select s.monthly_salary, es.employee_id, e.employee_name
+FROM salary s
+join employee_salary es on  s.id = es.salary_id 
+left join employees e on e.id = es.employee_id
+where employee_name isnull 
+
+--4. Р’С‹РІРµСЃС‚Рё РІСЃРµ Р·Р°СЂРїР»Р°С‚РЅС‹Рµ РїРѕР·РёС†РёРё  РјРµРЅСЊС€Рµ 2000 РЅРѕ СЂР°Р±РѕС‚РЅРёРє РїРѕ РЅРёРј РЅРµ РЅР°Р·РЅР°С‡РµРЅ. (Р—Рџ РµСЃС‚СЊ, РЅРѕ РЅРµ РїРѕРЅСЏС‚РЅРѕ РєС‚Рѕ РµС‘ РїРѕР»СѓС‡Р°РµС‚.)
+select s.monthly_salary, es.employee_id, e.employee_name
+FROM salary s
+join employee_salary es on  s.id = es.salary_id 
+left join employees e on e.id = es.employee_id
+where employee_name isnull and monthly_salary < 2000
+
+--5. РќР°Р№С‚Рё РІСЃРµС… СЂР°Р±РѕС‚РЅРёРєРѕРІ РєРѕРјСѓ РЅРµ РЅР°С‡РёСЃР»РµРЅР° Р—Рџ.
+select e.employee_name, s.monthly_salary
+from employees e
+left join employee_salary es on e.id = es.employee_id
+left join salary s on s.id = es.salary_id
+where monthly_salary isnull 
+
+ --6. Р’С‹РІРµСЃС‚Рё РІСЃРµС… СЂР°Р±РѕС‚РЅРёРєРѕРІ СЃ РЅР°Р·РІР°РЅРёСЏРјРё РёС… РґРѕР»Р¶РЅРѕСЃС‚Рё.
+select e.employee_name, r.role_name 
+from employees e
+left join roles_employee re on e.id = re.employee_id
+left join roles r on re.role_id = r.id
+
+ --7. Р’С‹РІРµСЃС‚Рё РёРјРµРЅР° Рё РґРѕР»Р¶РЅРѕСЃС‚СЊ С‚РѕР»СЊРєРѕ Java СЂР°Р·СЂР°Р±РѕС‚С‡РёРєРѕРІ.
+ select e.employee_name, r.role_name 
+from employees e
+join roles_employee re on e.id = re.employee_id
+join roles r on re.role_id = r.id
+where role_name like '%Java%'
+
+ --8. Р’С‹РІРµСЃС‚Рё РёРјРµРЅР° Рё РґРѕР»Р¶РЅРѕСЃС‚СЊ С‚РѕР»СЊРєРѕ Python СЂР°Р·СЂР°Р±РѕС‚С‡РёРєРѕРІ.
+ SELECT e.employee_name, r.role_name 
+ FROM employees e
+ JOIN roles_employee re ON re.employee_id = e.id
+ join roles r on re.role_id = r.id 
+ where role_name like '%Python%'
  
- --2. Вывести всех студентов в таблице ???
-select id, name from students;
+ --9. Р’С‹РІРµСЃС‚Рё РёРјРµРЅР° Рё РґРѕР»Р¶РЅРѕСЃС‚СЊ РІСЃРµС… QA РёРЅР¶РµРЅРµСЂРѕРІ.
+ SELECT e.employee_name, r.role_name 
+ FROM employees e
+ JOIN roles_employee re ON re.employee_id = e.id
+ join roles r on re.role_id = r.id 
+ where role_name like '%QA%'
+  
+ --10. Р’С‹РІРµСЃС‚Рё РёРјРµРЅР° Рё РґРѕР»Р¶РЅРѕСЃС‚СЊ СЂСѓС‡РЅС‹С… QA РёРЅР¶РµРЅРµСЂРѕРІ.
+ SELECT e.employee_name, r.role_name
+ FROM employees e
+ JOIN roles_employee re ON re.employee_id = e.id
+ join roles r on re.role_id = r.id 
+ where role_name like '%QA%' and role_name not like '%Automation%'
+ 
+ --11. Р’С‹РІРµСЃС‚Рё РёРјРµРЅР° Рё РґРѕР»Р¶РЅРѕСЃС‚СЊ Р°РІС‚РѕРјР°С‚РёР·Р°С‚РѕСЂРѕРІ QA
+ SELECT e.employee_name, r.role_name --roles_employee.role_id
+ FROM employees e
+ JOIN roles_employee re ON re.employee_id = e.id
+ join roles r on re.role_id = r.id 
+ where role_name like '%Automation%'
+ 
+ --12. Р’С‹РІРµСЃС‚Рё РёРјРµРЅР° Рё Р·Р°СЂРїР»Р°С‚С‹ Junior СЃРїРµС†РёР°Р»РёСЃС‚РѕРІ
+select e.employee_name, r.role_name, s.monthly_salary 
+from employees e
+join roles_employee re on e.id = re.employee_id
+join employee_salary es on re.employee_id = es.employee_id 
+join salary s on es.salary_id = s.id 
+join roles r on re.role_id = r.id
+where role_name like '%Junior%'
+ 
+ --13. Р’С‹РІРµСЃС‚Рё РёРјРµРЅР° Рё Р·Р°СЂРїР»Р°С‚С‹ Middle СЃРїРµС†РёР°Р»РёСЃС‚РѕРІ
+select e.employee_name, r.role_name, s.monthly_salary 
+from employees e
+join roles_employee re on e.id = re.employee_id
+join employee_salary es on re.employee_id = es.employee_id 
+join salary s on es.salary_id = s.id 
+join roles r on re.role_id = r.id
+where role_name like '%Middle%'
+ 
+  --14. Р’С‹РІРµСЃС‚Рё РёРјРµРЅР° Рё Р·Р°СЂРїР»Р°С‚С‹ Senior СЃРїРµС†РёР°Р»РёСЃС‚РѕРІ
+select e.employee_name, r.role_name, s.monthly_salary 
+from employees e
+join roles_employee re on e.id = re.employee_id
+join employee_salary es on re.employee_id = es.employee_id 
+join salary s on es.salary_id = s.id 
+join roles r on re.role_id = r.id
+where role_name like '%Senior%'
+ 
+ --15. Р’С‹РІРµСЃС‚Рё Р·Р°СЂРїР»Р°С‚С‹ Java СЂР°Р·СЂР°Р±РѕС‚С‡РёРєРѕРІ
+ select r.role_name, s.monthly_salary 
+ from roles r
+ join roles_employee re on r.id = re.role_id 
+ join employee_salary es on re.employee_id = es.employee_id 
+ join salary s on es.salary_id = s.id
+ where role_name like '%Java %'
+ 
+ --16. Р’С‹РІРµСЃС‚Рё Р·Р°СЂРїР»Р°С‚С‹ Python СЂР°Р·СЂР°Р±РѕС‚С‡РёРєРѕРІ
+ select r.role_name, s.monthly_salary 
+ from roles r
+ join roles_employee re on r.id = re.role_id 
+ join employee_salary es on re.employee_id = es.employee_id 
+ join salary s on es.salary_id = s.id
+ where role_name like '%Python%'
+ 
+ --17. Р’С‹РІРµСЃС‚Рё РёРјРµРЅР° Рё Р·Р°СЂРїР»Р°С‚С‹ Junior Python СЂР°Р·СЂР°Р±РѕС‚С‡РёРєРѕРІ
+select e.employee_name, s.monthly_salary, r.role_name
+from employees e
+join roles_employee re on e.id = re.employee_id
+join employee_salary es on re.employee_id = es.employee_id 
+join salary s on es.salary_id = s.id 
+join roles r on re.role_id = r.id
+where role_name like '%Junior%' and role_name like '%Python%'
+ 
+ --18. Р’С‹РІРµСЃС‚Рё РёРјРµРЅР° Рё Р·Р°СЂРїР»Р°С‚С‹ Middle JS СЂР°Р·СЂР°Р±РѕС‚С‡РёРєРѕРІ
+select e.employee_name, s.monthly_salary, r.role_name
+from employees e
+join roles_employee re on e.id = re.employee_id
+join employee_salary es on re.employee_id = es.employee_id 
+join salary s on es.salary_id = s.id 
+join roles r on re.role_id = r.id
+where role_name like '%Middle%' and role_name like '%JavaScript%'
+ 
+ --19. Р’С‹РІРµСЃС‚Рё РёРјРµРЅР° Рё Р·Р°СЂРїР»Р°С‚С‹ Senior Java СЂР°Р·СЂР°Р±РѕС‚С‡РёРєРѕРІ
+select e.employee_name, s.monthly_salary, r.role_name
+from employees e
+join roles_employee re on e.id = re.employee_id
+join employee_salary es on re.employee_id = es.employee_id 
+join salary s on es.salary_id = s.id 
+join roles r on re.role_id = r.id
+where role_name like '%Senior%' and role_name like '%Java%'
+ 
+ --20. Р’С‹РІРµСЃС‚Рё Р·Р°СЂРїР»Р°С‚С‹ Junior QA РёРЅР¶РµРЅРµСЂРѕРІ
+ select r.role_name, s.monthly_salary 
+ from roles r
+ join roles_employee re on r.id = re.role_id 
+ join employee_salary es on re.employee_id = es.employee_id 
+ join salary s on es.salary_id = s.id
+ where role_name like '%QA%' and role_name like '%Junior%'
+ 
+ --21. Р’С‹РІРµСЃС‚Рё СЃСЂРµРґРЅСЋСЋ Р·Р°СЂРїР»Р°С‚Сѓ РІСЃРµС… Junior СЃРїРµС†РёР°Р»РёСЃС‚РѕРІ
+ SELECT AVG(monthly_salary)
+ FROM salary s
+ join employee_salary es on s.id = es.salary_id
+ join roles_employee re on es.employee_id = re.employee_id 
+ join roles r on re.role_id = r.id 
+ WHERE role_name like '%Junior%';
+ 
+ --22. Р’С‹РІРµСЃС‚Рё СЃСѓРјРјСѓ Р·Р°СЂРїР»Р°С‚ JS СЂР°Р·СЂР°Р±РѕС‚С‡РёРєРѕРІ
+SELECT SUM(monthly_salary)
+FROM salary s
+join employee_salary es on s.id = es.salary_id 
+join roles_employee re on es.employee_id = re.employee_id 
+join roles r on re.role_id = r.id 
+WHERE role_name like '%JavaScript%';
 
- --3. Вывести только Id пользователей
-select id from students;
+ --23. Р’С‹РІРµСЃС‚Рё РјРёРЅРёРјР°Р»СЊРЅСѓСЋ Р—Рџ QA РёРЅР¶РµРЅРµСЂРѕРІ
+SELECT MIN(monthly_salary)
+FROM salary s
+join employee_salary es on s.id = es.salary_id 
+join roles_employee re on es.employee_id = re.employee_id 
+join roles r on re.role_id = r.id
+WHERE role_name like '%QA%';
 
- --4. Вывести только имя пользователей
-select name from students;
+ --24. Р’С‹РІРµСЃС‚Рё РјР°РєСЃРёРјР°Р»СЊРЅСѓСЋ Р—Рџ QA РёРЅР¶РµРЅРµСЂРѕРІ
+SELECT MAX(monthly_salary)
+FROM salary s
+join employee_salary es on s.id = es.salary_id 
+join roles_employee re on es.employee_id = re.employee_id 
+join roles r on re.role_id = r.id
+WHERE role_name like '%QA%';
 
- --5. Вывести только email пользователей
-select email from students;
+ --25. Р’С‹РІРµСЃС‚Рё РєРѕР»РёС‡РµСЃС‚РІРѕ QA РёРЅР¶РµРЅРµСЂРѕРІ
+SELECT COUNT(employee_name)
+FROM employees e
+join roles_employee re on e.id = re.employee_id 
+join roles r on re.role_id = r.id
+WHERE role_name like '%QA%';
 
- --6. Вывести имя и email пользователей
-select name, email from students;
+ --26. Р’С‹РІРµСЃС‚Рё РєРѕР»РёС‡РµСЃС‚РІРѕ Middle СЃРїРµС†РёР°Р»РёСЃС‚РѕРІ.
+SELECT COUNT(employee_name)
+FROM employees e
+join roles_employee re on e.id = re.employee_id 
+join roles r on re.role_id = r.id
+WHERE role_name like '%Middle%';
 
- --7. Вывести id, имя, email и дату создания пользователей
-select id, name, email, created_on from students;
+ --27. Р’С‹РІРµСЃС‚Рё РєРѕР»РёС‡РµСЃС‚РІРѕ СЂР°Р·СЂР°Р±РѕС‚С‡РёРєРѕРІ (СЃ Р·Р°СЂРїР»Р°С‚Р°РјРё Рё Р±РµР·)
+SELECT COUNT(employee_name)
+FROM employees e
+join roles_employee re on e.id = re.employee_id 
+join roles r on re.role_id = r.id
+WHERE role_name like '%developer%';
 
- --8. Вывести пользователей где password 12333
-select * from students where password = '12333';
+ --28. Р’С‹РІРµСЃС‚Рё С„РѕРЅРґ (СЃСѓРјРјСѓ) Р·Р°СЂРїР»Р°С‚С‹ СЂР°Р·СЂР°Р±РѕС‚С‡РёРєРѕРІ.
+SELECT SUM(monthly_salary)
+FROM salary s
+join employee_salary es on s.id = es.salary_id
+join roles_employee re on es.employee_id = re.employee_id 
+join roles r on re.role_id = r.id
+WHERE role_name like '%developer%';
 
- --9. Вывести пользователей которые были созданы 2021-03-26 00:00:00
-select * from students where created_on = '2021-03-26 00:00:00';
+ --29. Р’С‹РІРµСЃС‚Рё РёРјРµРЅР°, РґРѕР»Р¶РЅРѕСЃС‚Рё Рё Р—Рџ РІСЃРµС… СЃРїРµС†РёР°Р»РёСЃС‚РѕРІ РїРѕ РІРѕР·СЂР°СЃС‚Р°РЅРёСЋ
+select e.employee_name, r.role_name, s.monthly_salary 
+from employees e
+join roles_employee re on e.id = re.employee_id
+join employee_salary es on re.employee_id = es.employee_id 
+join salary s on es.salary_id = s.id 
+join roles r on re.role_id = r.id
+ORDER BY e.employee_name, r.role_name, s.monthly_salary;
 
- --10. Вывести пользователей где в имени есть слово Анна
-select * from students where name like '%Анна%';
+ --30. Р’С‹РІРµСЃС‚Рё РёРјРµРЅР°, РґРѕР»Р¶РЅРѕСЃС‚Рё Рё Р—Рџ РІСЃРµС… СЃРїРµС†РёР°Р»РёСЃС‚РѕРІ РїРѕ РІРѕР·СЂР°СЃС‚Р°РЅРёСЋ Сѓ СЃРїРµС†РёР°Р»РёСЃС‚РѕРІ Сѓ РєРѕС‚РѕСЂС‹С… Р—Рџ РѕС‚ 1700 РґРѕ 2300
+select e.employee_name, r.role_name, s.monthly_salary 
+from employees e
+join roles_employee re on e.id = re.employee_id
+join employee_salary es on re.employee_id = es.employee_id 
+join salary s on es.salary_id = s.id 
+join roles r on re.role_id = r.id
+where monthly_salary between 1700 and 2300
+ORDER BY e.employee_name, r.role_name, s.monthly_salary;
 
---11. Вывести пользователей где в имени в конце есть 8
-select * from students where name like '%8';
+ --31. Р’С‹РІРµСЃС‚Рё РёРјРµРЅР°, РґРѕР»Р¶РЅРѕСЃС‚Рё Рё Р—Рџ РІСЃРµС… СЃРїРµС†РёР°Р»РёСЃС‚РѕРІ РїРѕ РІРѕР·СЂР°СЃС‚Р°РЅРёСЋ Сѓ СЃРїРµС†РёР°Р»РёСЃС‚РѕРІ Сѓ РєРѕС‚РѕСЂС‹С… Р—Рџ РјРµРЅСЊС€Рµ 2300
+select e.employee_name, r.role_name, s.monthly_salary 
+from employees e
+join roles_employee re on e.id = re.employee_id
+join employee_salary es on re.employee_id = es.employee_id 
+join salary s on es.salary_id = s.id 
+join roles r on re.role_id = r.id
+where monthly_salary < 2300
+ORDER BY e.employee_name, r.role_name, s.monthly_salary;
 
- --12. Вывести пользователей где в имени в есть буква а
-select * from students where name like '%а%';
-
- --13. Вывести пользователей которые были созданы 2021-07-12 00:00:00
-select * from students where created_on = '2021-07-12 00:00:00';
-
- --14. Вывести пользователей которые были созданы 2021-07-12 00:00:00 и имеют пароль 1m313
-select * from students where created_on = '2021-07-12 00:00:00' and password = '1m313';
-
- --15. Вывести пользователей которые были созданы 2021-07-12 00:00:00 и у которых в имени есть слово Andrey
-select * from students where created_on = '2021-07-12 00:00:00' and name like '%Andrey%';
-
- --16. Вывести пользователей которые были созданы 2021-07-12 00:00:00 и у которых в имени есть цифра 8
-select * from students where created_on = '2021-07-12 00:00:00' and name like '%8%';
-
- --17. Вывести пользователя у которых id равен 10
-select * from students where id = 10;
-
- --18. Вывести пользователя у которых id равен 53
-select * from students where id = 53;
-
- --19. Вывести пользователя у которых id больше 40
-select * from students where id > 53;
-
- --20. Вывести пользователя у которых id меньше 30
-select * from students where id < 30;
-
- --21. Вывести пользователя у которых id меньше 27 или больше 88
-select * from students where id < 27 or id > 88;
-
- --22. Вывести пользователя у которых id меньше либо равно 37
-select * from students where id <= 37;
-
- --23. Вывести пользователя у которых id больше либо равно 37
-select * from students where id >= 37;
-
- --24. Вывести пользователя у которых id больше 80 но меньше 90
-select * from students where id < 90 and id > 80;
-
- --25. Вывести пользователя у которых id между 80 и 90
-select * from students where id between 80 and 90;
-
- --26. Вывести пользователей где password равен 12333, 1m313, 123313
-select * from students where password = '12333' or password = '1m313' or password = '123313';
-
- --27. Вывести пользователей где created_on равен 2020-10-03 00:00:00, 2021-05-19 00:00:00, 2021-03-26 00:00:00
-select * from students where created_on = '2020-10-03 00:00:00' or created_on = '2021-05-19 00:00:00' or created_on = '2021-03-26 00:00:00';
-
- --28. Вывести минимальный id 
-select min(id) from students;
-
- --29. Вывести максимальный.
-select max(id) from students;
-
- --30. Вывести количество пользователей
-select count(name) from students;
-
- --31. Вывести id пользователя, имя, дату создания пользователя. 
- --Отсортировать по порядку возрастания даты добавления пользоватлеля.
-select id, name, created_on from students
-order by created_on asc;
-
- --32. Вывести id пользователя, имя, дату создания пользователя. 
- --Отсортировать по порядку убывания даты добавления пользоватлеля.
-select id, name, created_on from students
-order by created_on desc;
-
+ --32. Р’С‹РІРµСЃС‚Рё РёРјРµРЅР°, РґРѕР»Р¶РЅРѕСЃС‚Рё Рё Р—Рџ РІСЃРµС… СЃРїРµС†РёР°Р»РёСЃС‚РѕРІ РїРѕ РІРѕР·СЂР°СЃС‚Р°РЅРёСЋ Сѓ СЃРїРµС†РёР°Р»РёСЃС‚РѕРІ Сѓ РєРѕС‚РѕСЂС‹С… Р—Рџ СЂР°РІРЅР° 1100, 1500, 2000
+select e.employee_name, r.role_name, s.monthly_salary 
+from employees e
+join roles_employee re on e.id = re.employee_id
+join employee_salary es on re.employee_id = es.employee_id 
+join salary s on es.salary_id = s.id 
+join roles r on re.role_id = r.id
+where monthly_salary in (1100, 1500, 2000)
+ORDER BY e.employee_name, r.role_name, s.monthly_salary;
