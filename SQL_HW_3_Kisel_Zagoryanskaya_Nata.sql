@@ -35,15 +35,15 @@ where monthly_salary isnull
  --6. Вывести всех работников с названиями их должности.
 select e.employee_name, r.role_name 
 from employees e
-left join roles_employee re on e.id = re.employee_id
-left join roles r on re.role_id = r.id
+join roles_employee re on e.id = re.employee_id
+join roles r on re.role_id = r.id
 
  --7. Вывести имена и должность только Java разработчиков.
  select e.employee_name, r.role_name 
 from employees e
 join roles_employee re on e.id = re.employee_id
 join roles r on re.role_id = r.id
-where role_name like '%Java%'
+where role_name like '%Java %'
 
  --8. Вывести имена и должность только Python разработчиков.
  SELECT e.employee_name, r.role_name 
@@ -141,7 +141,7 @@ join roles_employee re on e.id = re.employee_id
 join employee_salary es on re.employee_id = es.employee_id 
 join salary s on es.salary_id = s.id 
 join roles r on re.role_id = r.id
-where role_name like '%Senior%' and role_name like '%Java%'
+where role_name like '%Senior%' and role_name like '%Java %'
  
  --20. Вывести зарплаты Junior QA инженеров
  select r.role_name, s.monthly_salary 
