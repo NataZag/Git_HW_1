@@ -1,0 +1,80 @@
+Сценарий напишите в .txt файл.
+.txt сценарий и .log файл прииложения todolist выгружайте на GitHub.
+Ссылкку на гитхаб присылайте в лс.
+
+ 1. Отобразить подключённый девайс в консоли.
+ 
+Загрузить Download SDK Platform-Tools for Windows (ресурс https://developer.android.com/studio/releases/platform-tools).
+Разархивировать его в корень С диска. 
+Запускаем cmd и переходим в папку с SDK Platform-Tools (cd C:\platform-tools_r31.0.3-windows)
+Команда ADB доступна из этой папки.
+Что бы сделть команду ADB доступной из любой папки:
+1. Копируем путь к папке (C:\platform-tools_r31.0.3-windows).
+2. Заходим в Мой компьтер и правой кнопкой мыши вызываем Свойства.
+3. Переходим в Дополнительные парметры системы - Переменные среды - Системные переменные -  Path - Изменить.
+4. Нажимаем Создать и вставляем наш путь к папке, ОК (сохраняем).
+Снова запускаем cmd и проверяем что команда ADB работает из любого места (папки).
+ 
+ Настройки для девайса:
+ 1. Ввести телефон в режим разработчика.
+ 2. Зайти в настройки Developer options.
+ 3. Активировать Developer options, USB debagging, Verify apps over USB, Verify bytecode of debuggable apps (если он имеется).
+ 
+ Подключить телефон к компьютеру.
+ 
+ В cmd пишем:
+ adb devices
+ и получаем ответ в виде:
+ 34HDU20211002506        device
+ 
+ Устанавливаем приложение Todolist на телефон программно:
+ 1. Заходим на компьтере в папку с приложением:
+ переходим на D диск, вводим в командной строке: 
+ D:
+ переходим в папку с приложением:
+ cd Programming\Testing\Group_23\Mobile\001_ToDoList-master\001_ToDoList-master
+
+ 2. Установить .apk файл приложениия todolist на телефон с компьютера через  ADB
+ adb install Todolist.apk
+ получем ответ:
+ Performing Streamed Install
+Success
+
+ 3. Вывести адрес приложения todolist в системе Android
+adb shell pm list "packages | grep todolist"
+получаем ответ:
+package:com.android.todolist
+
+ 4. Сделать скриншот (125.png) запущенного приложения todolist и сразу скопировать на компьютер в одной команде.
+adb shell screencap /storage/emulated/0/DCIM/125.png && adb pull /storage/emulated/0/DCIM/125.png D:\Programming\Testing\Group_23\Mobile\001_ToDoList-master\001_ToDoList-master/125.png
+получаем ответ:
+/storage/emulated/0/DCIM/125.png: 1 file pulled, 0 skipped. 1.8 MB/s (46393 bytes in 0.025s)
+
+adb shell screencap /storage/emulated/0/DCIM/125.png  - сохранение скриншота (125.png) с телефона программно (на телефоне).
+
+adb pull /storage/emulated/0/DCIM/123.png \Users\Studies\Desktop\001_ToDoList-master\001_ToDoList-master/125.png 
+- передать скриншот 125.png с телефона на компьютер
+
+ 5. Вывести в консоль логи приложения todolist
+adb shell "logcat |grep -rnw todolist" - логи приложения
+выводит в консоль в логи приложения в реальном времени, при работе с приложением
+
+сtrl+C - выйти из команды логов
+ 
+ 6. Скопировать логи приложения todolist на компьютер.
+ adb shell "logcat |grep -rnw todolist" > log_todolist.log 
+ на компьютере в папке с apk файлом создается текстовый файл log_todolist, куда идет запись логов приложения
+ 
+ adb shell "logcat -c" - обнулить буфер логов
+  
+ 7. Удалить приложение todolist с телефона через ADB
+ adb uninstall com.android.todolist
+ получаем ответ:
+ Success
+
+
+adb backup -apk -shared -all -f /Users\Studies\Desktop\001_ToDoList-master\001_ToDoList-master/backup.ad
+- сохранение бэкапа всего телефона
+
+adb restore Users\Studies\Desktop\001_ToDoList-master\001_ToDoList-master/backup.ad
+- возврат телефона к сохраненному бэкапу
